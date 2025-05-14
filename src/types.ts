@@ -1,16 +1,18 @@
-import { PressableProps } from "react-native";
+import { GestureResponderEvent, PressableProps } from "react-native";
 
 export interface PreviewData {
   description?: string;
   image?: string;
   link?: string;
   title?: string;
-  url: string;
 }
 
-export interface UrlPreviewProps extends PressableProps {
+export interface UrlPreviewProps extends Omit<PressableProps, "onPress"> {
   onPreviewDataFetched?: (previewData: PreviewData) => void;
-  previewData?: PreviewData;
   requestTimeout?: number;
   url: string;
+  onPress?: (
+    data: PreviewData | undefined,
+    event: GestureResponderEvent
+  ) => void;
 }

@@ -7,9 +7,11 @@ import {
   Pressable,
   Text,
   TextProps,
+  Image as ImageComponent,
+  GestureResponderEvent,
 } from "react-native";
 
-import { UrlPreviewProps } from "./types";
+import { PreviewData, UrlPreviewProps } from "./types";
 import { getPreviewDataHelper, renderSpecialElementHelper } from "./utils";
 
 enum EUrlPreview {
@@ -21,20 +23,16 @@ enum EUrlPreview {
 const UrlPreviewComponent = memo(
   ({
     onPreviewDataFetched,
-    previewData,
-    requestTimeout = 5000,
+    requestTimeout = 15000,
     url,
     children,
+    onPress,
     ...props
   }: UrlPreviewProps) => {
-    const [data, setData] = useState(previewData);
+    const [data, setData] = useState<PreviewData>();
 
     useEffect(() => {
       let isCancelled = false;
-      if (previewData) {
-        setData(previewData);
-        return;
-      }
 
       const fetchData = async () => {
         setData(undefined);
@@ -53,34 +51,41 @@ const UrlPreviewComponent = memo(
       return () => {
         isCancelled = true;
       };
-    }, [onPreviewDataFetched, previewData, requestTimeout, url]);
+    }, [onPreviewDataFetched, requestTimeout, url]);
 
-    const handlePress = () =>
-      data?.link &&
-      Linking.openURL(data.link).catch(() => console.log("ljafn"));
+    const handlePress = (event: GestureResponderEvent) => {
+      if (typeof onPress === "function") {
+        onPress(data, event);
+      } else {
+        if (data?.link)
+          Linking.openURL(data.link).catch(() => console.log("ljafn"));
+      }
+    };
 
     const ContentPreview = useMemo(
       () =>
         renderSpecialElementHelper({
           children:
             typeof children === "function"
-              ? children({ pressed: false })
+              ? children({ pressed: false, hovered: false })
               : children,
           props: {
             [EUrlPreview.Title]: { children: data?.title || "" },
             [EUrlPreview.Description]: { children: data?.description || "" },
-            [EUrlPreview.Image]: { source: data?.image || "" },
+            [EUrlPreview.Image]: {
+              source: data?.image ? { uri: data.image } : "",
+            },
           },
         }),
-      [data, children],
+      [data, children]
     );
 
     return (
-      <Pressable onPress={handlePress} {...props}>
+      <Pressable {...props} onPress={handlePress}>
         {ContentPreview}
       </Pressable>
     );
-  },
+  }
 );
 
 const Title = ({
@@ -106,7 +111,7 @@ const Image = ({
   placeholder,
   ...props
 }: ImageProps & { placeholder?: ImageSourcePropType }) => (
-  <Image source={source || placeholder} {...props} />
+  <ImageComponent source={source || placeholder || undefined} {...props} />
 );
 Image.displayName = EUrlPreview.Image;
 
