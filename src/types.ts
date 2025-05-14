@@ -13,6 +13,6 @@ export interface UrlPreviewProps extends Omit<PressableProps, "onPress"> {
   url: string;
   onPress?: (
     data: PreviewData | undefined,
-    event: GestureResponderEvent
+    event: GestureResponderEvent,
   ) => void;
 }

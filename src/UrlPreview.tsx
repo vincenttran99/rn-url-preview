@@ -77,7 +77,7 @@ const UrlPreviewComponent = memo(
             },
           },
         }),
-      [data, children]
+      [data, children],
     );
 
     return (
@@ -85,7 +85,7 @@ const UrlPreviewComponent = memo(
         {ContentPreview}
       </Pressable>
     );
-  }
+  },
 );
 
 const Title = ({
