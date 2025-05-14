@@ -2,8 +2,6 @@
 
 Fully customizable preview of the URL.
 
-<!-- <img src="https://user-images.githubusercontent.com/14123304/119363213-d727b580-bcad-11eb-8678-6e4c4a54621c.png" width="428" height="926"> -->
-
 ## Getting Started
 
 ```sh
@@ -12,12 +10,25 @@ yarn add rn-url-preview
 
 ## Usage
 
+<img src="assets/screenshot.png" width="754" height="650">
+
 ```tsx
 import UrlPreview from "rn-url-preview";
 // ...
-<UrlPreview url="https://github.com">
-  <UrlPreview.Image />
-  <UrlPreview.Title />
+<UrlPreview
+  url="https://github.com/"
+  style={{
+    backgroundColor: "gainsboro",
+    borderRadius: 16,
+    padding: 12,
+    marginVertical: 12,
+    gap: 12,
+  }}
+>
+  <UrlPreview.Image style={{ width: "100%", height: 200, borderRadius: 12 }} />
+  <UrlPreview.Title
+    style={{ fontWeight: "bold", fontSize: 18, color: "blue" }}
+  />
   <UrlPreview.Description />
 </UrlPreview>;
 ```
