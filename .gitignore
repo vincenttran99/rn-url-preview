@@ -3,6 +3,7 @@ node_modules/
 
 # Build
 lib/
+assets/
 
 # Logs
 *.log
