@@ -60,15 +60,17 @@ export function renderSpecialElementHelper({
     // If child is a valid element with children, recursively process them
     if (
       isValidElement(child) &&
+      // @ts-expect-error
       Children.toArray(child.props.children).length > 0
     ) {
-      // @ts-ignore
       return cloneElement(
         child,
+        // @ts-expect-error
         child?.props,
-        Children.toArray((child as React.ReactElement).props.children).map(
-          processChild
-        )
+        Children.toArray(
+          (child as React.ReactElement<{ children: React.ReactNode }>).props
+            .children
+        ).map(processChild)
       );
     }
 

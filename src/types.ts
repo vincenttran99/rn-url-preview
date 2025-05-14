@@ -1,4 +1,4 @@
-import { PressableProps, StyleProp, TextStyle, ViewStyle } from "react-native";
+import { PressableProps } from "react-native";
 
 export interface PreviewData {
   description?: string;
