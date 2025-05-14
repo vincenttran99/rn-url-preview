@@ -69,8 +69,8 @@ export function renderSpecialElementHelper({
         child?.props,
         Children.toArray(
           (child as React.ReactElement<{ children: React.ReactNode }>).props
-            .children
-        ).map(processChild)
+            .children,
+        ).map(processChild),
       );
     }
 
@@ -110,7 +110,7 @@ export function renderSpecialElementHelper({
  */
 export const getActualImageUrlHelper = (
   baseUrl: string,
-  imageUrl?: string
+  imageUrl?: string,
 ): string | undefined => {
   let actualImageUrl = imageUrl?.trim();
   if (!actualImageUrl || actualImageUrl.startsWith("data")) return;
@@ -140,7 +140,7 @@ export const getActualImageUrlHelper = (
  * @returns {string|undefined} - The decoded text or undefined
  */
 export const getHtmlEntitiesDecodedTextHelper = (
-  text?: string
+  text?: string,
 ): string | undefined => {
   const actualText = text?.trim();
   if (!actualText) return;
@@ -159,7 +159,7 @@ export const getHtmlEntitiesDecodedTextHelper = (
 export const getContentHelper = (
   left: string,
   right: string,
-  type: string
+  type: string,
 ): string | undefined => {
   const contents = {
     [left.trim()]: right,
@@ -177,7 +177,7 @@ export const getContentHelper = (
  */
 /* istanbul ignore next */
 export const getPreviewDataImageHelper = async (
-  url?: string
+  url?: string,
 ): Promise<string | undefined> => {
   if (!url) return;
   return url;
@@ -193,7 +193,7 @@ export const getPreviewDataImageHelper = async (
 /* istanbul ignore next */
 export const getPreviewDataHelper = async (
   text: string,
-  requestTimeout = 5000
+  requestTimeout = 5000,
 ): Promise<PreviewData> => {
   // Initialize empty preview data
   const previewData: PreviewData = {
@@ -305,13 +305,13 @@ export const getPreviewDataHelper = async (
             : acc.title,
         };
       },
-      { title: previewData.title }
+      { title: previewData.title },
     );
 
     // Update preview data with meta information
     previewData.description = metaPreviewData.description;
     previewData.image = await getPreviewDataImageHelper(
-      metaPreviewData.imageUrl
+      metaPreviewData.imageUrl,
     );
     previewData.title = metaPreviewData.title;
 
