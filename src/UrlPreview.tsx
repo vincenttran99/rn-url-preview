@@ -67,7 +67,7 @@ const UrlPreviewComponent = memo(
         renderSpecialElementHelper({
           children:
             typeof children === "function"
-              ? children({ pressed: false, hovered: false })
+              ? children({ pressed: false })
               : children,
           props: {
             [EUrlPreview.Title]: { children: data?.title || "" },
@@ -77,7 +77,7 @@ const UrlPreviewComponent = memo(
             },
           },
         }),
-      [data, children],
+      [data, children]
     );
 
     return (
@@ -85,7 +85,7 @@ const UrlPreviewComponent = memo(
         {ContentPreview}
       </Pressable>
     );
-  },
+  }
 );
 
 const Title = ({
