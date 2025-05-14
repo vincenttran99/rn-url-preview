@@ -10,7 +10,7 @@ yarn add rn-url-preview
 
 ## Usage
 
-<img src="assets/screenshot.png" width="754" height="650">
+<img src="https://raw.githubusercontent.com/vincenttran99/rn-url-preview/refs/heads/main/assets/screenshot.png" width="754" height="650">
 
 ```tsx
 import UrlPreview from "rn-url-preview";
