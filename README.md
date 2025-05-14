@@ -35,7 +35,7 @@ import UrlPreview from "rn-url-preview";
 
 ## Props
 
-You can customize everything in UrlPreview, UrlPreview.Image, UrlPreview.Title, and UrlPreview.Description.
+You can customize everything in UrlPreview, UrlPreview.Image, UrlPreview.Title and UrlPreview.Description. Top image, bottom title, left image, right title, just title and description, no image. Whatever you want.
 
 | Name                   | Type  | Description                                                                                                                                                                                                                                                                           |
 | ---------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
