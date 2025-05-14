@@ -8,6 +8,8 @@ node_modules/
 .vscode/
 .idea/
 
+assets/
+
 # Configuration files
 tsconfig.json
 jest.config.js
