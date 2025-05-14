@@ -1,0 +1,49 @@
+{
+  "name": "rn-url-preview",
+  "version": "1.0.0",
+  "description": "React Native URL Preview component",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincenttran99/rn-url-preview.git"
+  },
+  "keywords": [
+    "react-native",
+    "preview",
+    "url",
+    "link",
+    "preview-url",
+    "url-preview",
+    "link-preview",
+    "react",
+    "typescript"
+  ],
+  "author": "vincenttran99",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincenttran99/rn-url-preview/issues"
+  },
+  "homepage": "https://github.com/vincenttran99/rn-url-preview#readme",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.70.0",
+    "jest": "^29.0.0",
+    "react-native": "^0.79.2",
+    "ts-jest": "^29.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "html-entities": "^2.6.0"
+  }
+}
