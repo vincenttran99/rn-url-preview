@@ -193,7 +193,7 @@ export const getPreviewDataImageHelper = async (
 /* istanbul ignore next */
 export const getPreviewDataHelper = async (
   text: string,
-  requestTimeout = 5000,
+  requestTimeout = 5000
 ): Promise<PreviewData> => {
   // Initialize empty preview data
   const previewData: PreviewData = {
@@ -220,25 +220,51 @@ export const getPreviewDataHelper = async (
       url = "https://" + url;
     }
 
-    // Set up fetch with timeout
-    let abortControllerTimeout: NodeJS.Timeout;
-    const abortController = new AbortController();
+    // Set up XMLHttpRequest with timeout
+    const response = await new Promise<{
+      headers: { get: (name: string) => string | null };
+      text: () => Promise<string>;
+    }>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      let timeoutId: NodeJS.Timeout;
 
-    const request = fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-      },
-      signal: abortController.signal,
+      xhr.open('GET', url, true);
+      xhr.setRequestHeader(
+        'User-Agent',
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+      );
+      xhr.timeout = requestTimeout;
+
+      xhr.onload = () => {
+        clearTimeout(timeoutId);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve({
+            headers: {
+              get: (name: string) => xhr.getResponseHeader(name),
+            },
+            text: async () => xhr.responseText,
+          });
+        } else {
+          reject(new Error(`HTTP ${xhr.status}`));
+        }
+      };
+
+      xhr.onerror = () => {
+        clearTimeout(timeoutId);
+        reject(new Error('Network error'));
+      };
+
+      xhr.ontimeout = () => {
+        clearTimeout(timeoutId);
+        reject(new Error('Request timeout'));
+      };
+
+      timeoutId = setTimeout(() => {
+        xhr.abort();
+      }, requestTimeout);
+
+      xhr.send();
     });
-
-    abortControllerTimeout = setTimeout(() => {
-      abortController.abort();
-    }, requestTimeout);
-
-    const response = await request;
-
-    clearTimeout(abortControllerTimeout);
 
     previewData.link = url;
 
@@ -304,13 +330,13 @@ export const getPreviewDataHelper = async (
             : acc.title,
         };
       },
-      { title: previewData.title },
+      { title: previewData.title }
     );
 
     // Update preview data with meta information
     previewData.description = metaPreviewData.description;
     previewData.image = await getPreviewDataImageHelper(
-      metaPreviewData.imageUrl,
+      metaPreviewData.imageUrl
     );
     previewData.title = metaPreviewData.title;
 
